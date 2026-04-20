@@ -1,0 +1,665 @@
+--- a/d:\ru_di_to_tuong.html
++++ /dev/null
+@@ -1,232 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="vi">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Một lời mời nhỏ xíu...</title>
+-    <link
+-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap"
+-        rel="stylesheet">
+-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+-    <style>
+-        * {
+-            margin: 0;
+-            padding: 0;
+-            box-sizing: border-box;
+-        }
+-
+-        body {
+-            font-family: 'Quicksand', sans-serif;
+-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+-            min-height: 100vh;
+-            min-height: 100dvh;
+-            /* Support for mobile address bars */
+-            display: flex;
+-            justify-content: center;
+-            align-items: center;
+-            overflow: hidden;
+-            position: relative;
+-            color: #4a4a4a;
+-            touch-action: manipulation;
+-            /* Prevents double-tap zoom on mobile buttons */
+-        }
+-
+-        /* Float animation */
+-        .circle {
+-            position: absolute;
+-            background: rgba(255, 255, 255, 0.4);
+-            border-radius: 50%;
+-            animation: float 5s infinite ease-in-out alternate;
+-            z-index: 0;
+-        }
+-
+-        .circle:nth-child(1) {
+-            width: 100px;
+-            height: 100px;
+-            top: 10%;
+-            left: 15%;
+-            animation-duration: 4s;
+-        }
+-
+-        .circle:nth-child(2) {
+-            width: 200px;
+-            height: 200px;
+-            bottom: 10%;
+-            right: 10%;
+-            animation-duration: 6s;
+-        }
+-
+-        .circle:nth-child(3) {
+-            width: 80px;
+-            height: 80px;
+-            top: 50%;
+-            right: 20%;
+-            animation-duration: 5s;
+-        }
+-
+-        @keyframes float {
+-            0% {
+-                transform: translateY(0) scale(1);
+-            }
+-
+-            100% {
+-                transform: translateY(-20px) scale(1.1);
+-            }
+-        }
+-
+-        .screen {
+-            background: rgba(255, 255, 255, 0.7);
+-            backdrop-filter: blur(15px);
+-            padding: 40px 30px;
+-            border-radius: 30px;
+-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+-            text-align: center;
+-            max-width: 500px;
+-            width: 90%;
+-            z-index: 10;
+-
+-            /* Animation setup for smooth transition */
+-            position: absolute;
+-            opacity: 0;
+-            visibility: hidden;
+-            transform: scale(0.9);
+-            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+-        }
+-
+-        .screen.active {
+-            opacity: 1;
+-            visibility: visible;
+-            transform: scale(1);
+-        }
+-
+-        h1 {
+-            font-family: 'Dancing Script', cursive;
+-            font-size: 2.8rem;
+-            color: #ff4d6d;
+-            margin-bottom: 20px;
+-            line-height: 1.2;
+-        }
+-
+-        p.text-big {
+-            font-size: 1.3rem;
+-            font-weight: 700;
+-            margin-bottom: 25px;
+-            line-height: 1.5;
+-        }
+-
+-        button {
+-            padding: 12px 30px;
+-            font-size: 1.2rem;
+-            font-family: 'Quicksand', sans-serif;
+-            font-weight: 700;
+-            border: none;
+-            border-radius: 50px;
+-            cursor: pointer;
+-            transition: all 0.2s;
+-            margin: 10px;
+-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+-        }
+-
+-        .btn-primary {
+-            background: linear-gradient(45deg, #ff4d6d, #ff758c);
+-            color: white;
+-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+-        }
+-
+-        .btn-primary:hover {
+-            transform: scale(1.05);
+-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
+-        }
+-
+-        .btn-outline {
+-            background: white;
+-            color: #ff4d6d;
+-            border: 2px solid #ff4d6d;
+-        }
+-
+-        /* Layout cho màn hình 3 (Nút Yes/No) */
+-        .btn-group {
+-            position: relative;
+-            margin-top: 10px;
+-            height: 60px;
+-            display: flex;
+-            justify-content: center;
+-        }
+-
+-        #btn-no {
+-            position: relative;
+-            z-index: 999;
+-        }
+-
+-        #btn-yes {
+-            z-index: 2;
+-        }
+-    </style>
+-</head>
+-
+-<body>
+-
+-    <!-- Audio ngầm nhẹ nhàng (Chỉ có thể phát khi user click vào nút mở đầu theo luật của Chrome) -->
+-    <audio id="bg-music" src="" loop></audio>
+-    <div class="circle"></div>
+-    <div class="circle"></div>
+-    <div class="circle"></div>
+-
+-    <!-- MÀN HÌNH 1: MỞ ĐẦU -->
+-    <div id="screen-1" class="screen active">
+-        <h1 style="font-family: 'Quicksand', sans-serif; font-size: 2rem;">Chào <span class="crush-name"
+-                style="color: #ff4d6d;">bạn</span> 👋</h1>
+-        <p class="text-big">Tớ có một lời mời nhỏ xíu dành cho bạn...</p>
+-        <br>
+-        <button class="btn-primary" onclick="nextScreen(1)">Mở ra xem thử đi 👀</button>
+-    </div>
+-
+-    <!-- MÀN HÌNH 2: CÂU CHUYỆN -->
+-    <div id="screen-2" class="screen">
+-        <p class="text-big">Tín hiệu vũ trụ bảo bạn đang chán(chữ n kéo dài)<br>Nên bảo tôi rủ bạn ik tô tượng</p>
+-        <br>
+-        <button class="btn-primary" onclick="nextScreen(2)">Nên tớ nghĩ tới cậu nè 🥰</button>
+-    </div>
+-
+-    <!-- MÀN HÌNH 3: LỜI MỜI CHÍNH -->
+-    <div id="screen-3" class="screen">
+-        <h1><span class="crush-name">Cậu</span> có muốn đi tô tượng với tớ không? 🎨</h1>
+-        <div class="btn-group">
+-            <button id="btn-yes" class="btn-primary" onclick="acceptInvitation()">Có chứ! 💖</button>
+-            <button id="btn-no" class="btn-outline">Khum đi 😛</button>
+-        </div>
+-        <p id="no-msg"
+-            style="color:#ff4d6d; font-weight:bold; height:20px; margin-top:10px; opacity:0; transition:0.3s;">Sao mà
+-            khum được 😆
+-        </p>
+-    </div>
+-
+-    <!-- MÀN HÌNH 4: CHỐT KÈO -->
+-    <div id="screen-4" class="screen">
+-        <h1>Chốt kèo rồi nha 😆🎉</h1>
+-        <br>
+-        <p style="margin-bottom: 20px; font-weight: 700; color: #ff4d6d;">Tớ sẽ qua đón! Lên đồ nhaaaa 👗🏍️</p>
+-
+-        <!-- Thay link Facebook/Messenger của bạn vào href -->
+-        <a id="messenger-link" href="#" target="_blank" style="text-decoration: none;">
+-            <button class="btn-primary">Chat tớ luôn chốt giờ thui 💌</button>
+-        </a>
+-    </div>
+-
+-    <script>
+-        // --- CONFIGURATION ---
+-        const CONFIG = {
+-            crushName: "Cậu", // Thay tên người ấy vào đây
+-            messengerUrl: "https://m.me/thinhthinh.lol" // Thay link messenger của bạn
+-        };
+-
+-        // Cập nhật thông tin từ CONFIG
+-        document.querySelectorAll('.crush-name').forEach(el => el.textContent = CONFIG.crushName);
+-        document.getElementById('messenger-link').href = CONFIG.messengerUrl;
+-
+-        let isTransitioning = false;
+-
+-        // Hàm chuyển qua màn hình tiếp theo
+-        function nextScreen(currentNumber) {
+-            if (isTransitioning) return;
+-            isTransitioning = true;
+-
+-            // Phát nhạc nền ở lần click đầu tiên để trình duyệt cho phép
+-            const music = document.getElementById('bg-music');
+-            if (currentNumber === 1 && music.paused) {
+-                music.play().catch((e) => console.log('Audio autoplay prevented'));
+-            }
+-
+-            const currentScreen = document.getElementById(`screen-${currentNumber}`);
+-            const nextScreen = document.getElementById(`screen-${currentNumber + 1}`);
+-
+-            if (currentScreen && nextScreen) {
+-                currentScreen.classList.remove('active');
+-                setTimeout(() => {
+-                    nextScreen.classList.add('active');
+-                    isTransitioning = false;
+-                }, 500);
+-            }
+-        }
+-
+-        // Logic Nút Không chạy trốn
+-        const btnNo = document.getElementById('btn-no');
+-        const noMsg = document.getElementById('no-msg');
+-
+-        // Hàm xử lý việc nhảy nút sang vị trí ngẫu nhiên
+-        function moveButton() {
+-            // Đưa nút ra khỏi container hiện tại và gắn vào body 
+-            // để position: fixed hoạt động chính xác theo toàn bộ khung hình
+-            if (btnNo.parentNode !== document.body) {
+-                document.body.appendChild(btnNo);
+-            }
+-
+-            const btnWidth = btnNo.offsetWidth;
+-            const btnHeight = btnNo.offsetHeight;
+-
+-            // Thêm khoảng đệm 20px để nút không dính sát mép màn hình
+-            const padding = 20;
+-            const maxX = window.innerWidth - btnWidth - padding;
+-            const maxY = window.innerHeight - btnHeight - padding;
+-
+-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+-
+-            btnNo.style.position = 'fixed';
+-            btnNo.style.left = randomX + 'px';
+-            btnNo.style.top = randomY + 'px';
+-            btnNo.style.zIndex = '1000'; // Đảm bảo luôn nằm trên các màn hình khác
+-            btnNo.style.margin = '0';    // Xóa margin để không làm lệch tính toán
+-
+-            // Hiện dòng chữ nài nỉ
+-            noMsg.style.opacity = '1';
+-        }
+-
+-        // Khi click vào nút "Khum đi", nó sẽ nhảy sang vị trí khác
+-        btnNo.addEventListener('click', (e) => {
+-            e.preventDefault(); // Ngăn chặn hành vi mặc định của nút (nếu có)
+-            moveButton();
+-        });
+-
+-        // Hỗ trợ chạm trên điện thoại
+-        btnNo.addEventListener('touchstart', (e) => {
+-            e.preventDefault();
+-            moveButton();
+-        });
+-        // Logic khi bấm nút CÓ
+-        function acceptInvitation() {
+-            btnNo.style.display = 'none'; // Ẩn nút "Khum đi"
+-            nextScreen(3); // Chuyển từ 3 sang 4
+-            shootConfetti();
+-        }
+-
+-        // Tạo hiệu ứng bắn pháo hoa
+-        function shootConfetti() {
+-            var duration = 4 * 1000;
+-            var animationEnd = Date.now() + duration;
+-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+-
+-            var interval = setInterval(function () {
+-                var timeLeft = animationEnd - Date.now();
+-                if (timeLeft <= 0) {
+-                    return clearInterval(interval);
+-                }
+-                var particleCount = 50 * (timeLeft / duration);
+-
+-                // Bắn từ 2 góc trái và phải
+-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+-            }, 250);
+-        }
+-
+-        function randomInRange(min, max) {
+-            return Math.random() * (max - min) + min;
+-        }
+-    </script>
+-</body>
+-
+-</html>
+Use code with care. Learn more
+--- /dev/null
++++ b/d:\index.html
+@@ -0,0 +1,232 @@
++<!DOCTYPE html>
++<html lang="vi">
++
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Một lời mời nhỏ xíu...</title>
++    <link
++        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap"
++        rel="stylesheet">
++    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++
++        body {
++            font-family: 'Quicksand', sans-serif;
++            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
++            min-height: 100vh;
++            min-height: 100dvh;
++            /* Support for mobile address bars */
++            display: flex;
++            justify-content: center;
++            align-items: center;
++            overflow: hidden;
++            position: relative;
++            color: #4a4a4a;
++            touch-action: manipulation;
++            /* Prevents double-tap zoom on mobile buttons */
++        }
++
++        /* Float animation */
++        .circle {
++            position: absolute;
++            background: rgba(255, 255, 255, 0.4);
++            border-radius: 50%;
++            animation: float 5s infinite ease-in-out alternate;
++            z-index: 0;
++        }
++
++        .circle:nth-child(1) {
++            width: 100px;
++            height: 100px;
++            top: 10%;
++            left: 15%;
++            animation-duration: 4s;
++        }
++
++        .circle:nth-child(2) {
++            width: 200px;
++            height: 200px;
++            bottom: 10%;
++            right: 10%;
++            animation-duration: 6s;
++        }
++
++        .circle:nth-child(3) {
++            width: 80px;
++            height: 80px;
++            top: 50%;
++            right: 20%;
++            animation-duration: 5s;
++        }
++
++        @keyframes float {
++            0% {
++                transform: translateY(0) scale(1);
++            }
++
++            100% {
++                transform: translateY(-20px) scale(1.1);
++            }
++        }
++
++        .screen {
++            background: rgba(255, 255, 255, 0.7);
++            backdrop-filter: blur(15px);
++            padding: 40px 30px;
++            border-radius: 30px;
++            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
++            text-align: center;
++            max-width: 500px;
++            width: 90%;
++            z-index: 10;
++
++            /* Animation setup for smooth transition */
++            position: absolute;
++            opacity: 0;
++            visibility: hidden;
++            transform: scale(0.9);
++            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
++        }
++
++        .screen.active {
++            opacity: 1;
++            visibility: visible;
++            transform: scale(1);
++        }
++
++        h1 {
++            font-family: 'Dancing Script', cursive;
++            font-size: 2.8rem;
++            color: #ff4d6d;
++            margin-bottom: 20px;
++            line-height: 1.2;
++        }
++
++        p.text-big {
++            font-size: 1.3rem;
++            font-weight: 700;
++            margin-bottom: 25px;
++            line-height: 1.5;
++        }
++
++        button {
++            padding: 12px 30px;
++            font-size: 1.2rem;
++            font-family: 'Quicksand', sans-serif;
++            font-weight: 700;
++            border: none;
++            border-radius: 50px;
++            cursor: pointer;
++            transition: all 0.2s;
++            margin: 10px;
++            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
++        }
++
++        .btn-primary {
++            background: linear-gradient(45deg, #ff4d6d, #ff758c);
++            color: white;
++            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
++        }
++
++        .btn-primary:hover {
++            transform: scale(1.05);
++            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
++        }
++
++        .btn-outline {
++            background: white;
++            color: #ff4d6d;
++            border: 2px solid #ff4d6d;
++        }
++
++        /* Layout cho màn hình 3 (Nút Yes/No) */
++        .btn-group {
++            position: relative;
++            margin-top: 10px;
++            height: 60px;
++            display: flex;
++            justify-content: center;
++        }
++
++        #btn-no {
++            position: relative;
++            z-index: 999;
++        }
++
++        #btn-yes {
++            z-index: 2;
++        }
++    </style>
++</head>
++
++<body>
++
++    <!-- Audio ngầm nhẹ nhàng (Chỉ có thể phát khi user click vào nút mở đầu theo luật của Chrome) -->
++    <audio id="bg-music" src="" loop></audio>
++    <div class="circle"></div>
++    <div class="circle"></div>
++    <div class="circle"></div>
++
++    <!-- MÀN HÌNH 1: MỞ ĐẦU -->
++    <div id="screen-1" class="screen active">
++        <h1 style="font-family: 'Quicksand', sans-serif; font-size: 2rem;">Chào <span class="crush-name"
++                style="color: #ff4d6d;">bạn</span> 👋</h1>
++        <p class="text-big">Tớ có một lời mời nhỏ xíu dành cho bạn...</p>
++        <br>
++        <button class="btn-primary" onclick="nextScreen(1)">Mở ra xem thử đi 👀</button>
++    </div>
++
++    <!-- MÀN HÌNH 2: CÂU CHUYỆN -->
++    <div id="screen-2" class="screen">
++        <p class="text-big">Tín hiệu vũ trụ bảo bạn đang chán(chữ n kéo dài)<br>Nên bảo tôi rủ bạn ik tô tượng</p>
++        <br>
++        <button class="btn-primary" onclick="nextScreen(2)">Nên tớ nghĩ tới cậu nè 🥰</button>
++    </div>
++
++    <!-- MÀN HÌNH 3: LỜI MỜI CHÍNH -->
++    <div id="screen-3" class="screen">
++        <h1><span class="crush-name">Cậu</span> có muốn đi tô tượng với tớ không? 🎨</h1>
++        <div class="btn-group">
++            <button id="btn-yes" class="btn-primary" onclick="acceptInvitation()">Có chứ! 💖</button>
++            <button id="btn-no" class="btn-outline">Khum đi 😛</button>
++        </div>
++        <p id="no-msg"
++            style="color:#ff4d6d; font-weight:bold; height:20px; margin-top:10px; opacity:0; transition:0.3s;">Sao mà
++            khum được 😆
++        </p>
++    </div>
++
++    <!-- MÀN HÌNH 4: CHỐT KÈO -->
++    <div id="screen-4" class="screen">
++        <h1>Chốt kèo rồi nha 😆🎉</h1>
++        <br>
++        <p style="margin-bottom: 20px; font-weight: 700; color: #ff4d6d;">Tớ sẽ qua đón! Lên đồ nhaaaa 👗🏍️</p>
++
++        <!-- Thay link Facebook/Messenger của bạn vào href -->
++        <a id="messenger-link" href="#" target="_blank" style="text-decoration: none;">
++            <button class="btn-primary">Chat tớ luôn chốt giờ thui 💌</button>
++        </a>
++    </div>
++
++    <script>
++        // --- CONFIGURATION ---
++        const CONFIG = {
++            crushName: "Cậu", // Thay tên người ấy vào đây
++            messengerUrl: "https://m.me/thinhthinh.lol" // Thay link messenger của bạn
++        };
++
++        // Cập nhật thông tin từ CONFIG
++        document.querySelectorAll('.crush-name').forEach(el => el.textContent = CONFIG.crushName);
++        document.getElementById('messenger-link').href = CONFIG.messengerUrl;
++
++        let isTransitioning = false;
++
++        // Hàm chuyển qua màn hình tiếp theo
++        function nextScreen(currentNumber) {
++            if (isTransitioning) return;
++            isTransitioning = true;
++
++            // Phát nhạc nền ở lần click đầu tiên để trình duyệt cho phép
++            const music = document.getElementById('bg-music');
++            if (currentNumber === 1 && music.paused) {
++                music.play().catch((e) => console.log('Audio autoplay prevented'));
++            }
++
++            const currentScreen = document.getElementById(`screen-${currentNumber}`);
++            const nextScreen = document.getElementById(`screen-${currentNumber + 1}`);
++
++            if (currentScreen && nextScreen) {
++                currentScreen.classList.remove('active');
++                setTimeout(() => {
++                    nextScreen.classList.add('active');
++                    isTransitioning = false;
++                }, 500);
++            }
++        }
++
++        // Logic Nút Không chạy trốn
++        const btnNo = document.getElementById('btn-no');
++        const noMsg = document.getElementById('no-msg');
++
++        // Hàm xử lý việc nhảy nút sang vị trí ngẫu nhiên
++        function moveButton() {
++            // Đưa nút ra khỏi container hiện tại và gắn vào body 
++            // để position: fixed hoạt động chính xác theo toàn bộ khung hình
++            if (btnNo.parentNode !== document.body) {
++                document.body.appendChild(btnNo);
++            }
++
++            const btnWidth = btnNo.offsetWidth;
++            const btnHeight = btnNo.offsetHeight;
++
++            // Thêm khoảng đệm 20px để nút không dính sát mép màn hình
++            const padding = 20;
++            const maxX = window.innerWidth - btnWidth - padding;
++            const maxY = window.innerHeight - btnHeight - padding;
++
++            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
++            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
++
++            btnNo.style.position = 'fixed';
++            btnNo.style.left = randomX + 'px';
++            btnNo.style.top = randomY + 'px';
++            btnNo.style.zIndex = '1000'; // Đảm bảo luôn nằm trên các màn hình khác
++            btnNo.style.margin = '0';    // Xóa margin để không làm lệch tính toán
++
++            // Hiện dòng chữ nài nỉ
++            noMsg.style.opacity = '1';
++        }
++
++        // Khi click vào nút "Khum đi", nó sẽ nhảy sang vị trí khác
++        btnNo.addEventListener('click', (e) => {
++            e.preventDefault(); // Ngăn chặn hành vi mặc định của nút (nếu có)
++            moveButton();
++        });
++
++        // Hỗ trợ chạm trên điện thoại
++        btnNo.addEventListener('touchstart', (e) => {
++            e.preventDefault();
++            moveButton();
++        });
++        // Logic khi bấm nút CÓ
++        function acceptInvitation() {
++            btnNo.style.display = 'none'; // Ẩn nút "Khum đi"
++            nextScreen(3); // Chuyển từ 3 sang 4
++            shootConfetti();
++        }
++
++        // Tạo hiệu ứng bắn pháo hoa
++        function shootConfetti() {
++            var duration = 4 * 1000;
++            var animationEnd = Date.now() + duration;
++            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
++
++            var interval = setInterval(function () {
++                var timeLeft = animationEnd - Date.now();
++                if (timeLeft <= 0) {
++                    return clearInterval(interval);
++                }
++                var particleCount = 50 * (timeLeft / duration);
++
++                // Bắn từ 2 góc trái và phải
++                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
++                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
++            }, 250);
++        }
++
++        function randomInRange(min, max) {
++            return Math.random() * (max - min) + min;
++        }
++    </script>
++</body>
++
++</html>
